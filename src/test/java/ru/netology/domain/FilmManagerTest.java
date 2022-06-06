@@ -52,7 +52,6 @@ class FilmManagerTest {
     Film[] returned = {eighth, ninth, tenth, eleventh};
     doReturn(returned).when(mockRepo).getFilms();
     
-    
     manager.add(eleventh);
     Film[] actual = manager.findAll();
     Film[] expected = {eighth, ninth, tenth, eleventh};
