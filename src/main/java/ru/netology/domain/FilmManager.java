@@ -1,8 +1,8 @@
 package ru.netology.domain;
 
 public class FilmManager {
-  private Film[] films=new Film[0];
-  private int limit=10;
+  private Film[] films = new Film[0];
+  private int limit = 10;
   
   public FilmManager() {
   }
@@ -11,15 +11,15 @@ public class FilmManager {
     this.limit = limit;
   }
   
-  public void add (Film newFilm){
-    int length= films.length+1;
-    int lastIndex=length-1;
-    Film[] tmp=new Film[length];
+  public void add(Film newFilm) {
+    int length = films.length + 1;
+    int lastIndex = length - 1;
+    Film[] tmp = new Film[length];
     for (int i = 0; i < films.length; i++) {
       tmp[i] = films[i];
     }
     tmp[lastIndex] = newFilm;
-    films=tmp;
+    films = tmp;
   }
   
   
@@ -27,17 +27,17 @@ public class FilmManager {
     return films;
   }
   
-  public Film[] findLast(){
-    int length=films.length;
+  public Film[] findLast() {
+    int length = films.length;
     int resultLength;
-    if (films.length<limit) {
+    if (films.length < limit) {
       resultLength = films.length;
     } else {
-      resultLength=limit;
+      resultLength = limit;
     }
-    Film[] tmp=new Film[resultLength];
+    Film[] tmp = new Film[resultLength];
     for (int i = 0; i < resultLength; i++) {
-      tmp[i]=films[length-1-i];
+      tmp[i] = films[length - 1 - i];
     }
     return tmp;
     
