@@ -2,6 +2,7 @@ package ru.netology.domain;
 
 public class FilmManager {
   private FilmRepository repo = new FilmRepository();
+  private Film[] films = new Film[0];
   private int limit = 10;
   
   public FilmManager(FilmRepository repo) {
@@ -15,6 +16,14 @@ public class FilmManager {
   
   public void add(Film newFilm) {
     repo.save(newFilm);
+    int length = films.length + 1;
+    int lastIndex = length - 1;
+    Film[] tmp = new Film[length];
+    for (int i = 0; i < films.length; i++) {
+      tmp[i] = films[i];
+    }
+    tmp[lastIndex] = newFilm;
+    films = tmp;
   }
   
   public Film[] findAll() {

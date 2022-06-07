@@ -32,10 +32,22 @@ class FilmManagerTest {
     
     Film[] actual = manager.findAll();
     Film[] expected = {first, second, third};
+  
+  
+  
+  @Test
+  public void shouldAddNewFilms() {
+    managerFiveLimit.add(first);
+    managerFiveLimit.add(second);
+    managerFiveLimit.add(seventh);
+    Film[] actual = managerFiveLimit.findAll();
+    Film[] expected = {first, second, seventh};
+    
   }
   
   
   @Test
+
   public void findLastFilms() {
     Film[] returned = {first, second, fourth, seventh};
     doReturn(returned).when(mockRepo).getFilms();
@@ -43,10 +55,67 @@ class FilmManagerTest {
     Film[] actual = manager.findLast();
     Film[] expected = {seventh, fourth, second, first};
     
+  public void findLastFilmsInFiveLimitLess() {
+    managerFiveLimit.add(first);
+    managerFiveLimit.add(second);
+    managerFiveLimit.add(fourth);
+    managerFiveLimit.add(seventh);
+    Film[] actual = managerFiveLimit.findLast();
+    Film[] expected = {seventh, fourth, second, first};
+    
     assertArrayEquals(expected, actual);
   }
   
   @Test
+  public void findLastFilmsInFiveLimitMore() {
+    managerFiveLimit.add(first);
+    managerFiveLimit.add(first);
+    managerFiveLimit.add(second);
+    managerFiveLimit.add(fourth);
+    managerFiveLimit.add(seventh);
+    managerFiveLimit.add(fifth);
+    managerFiveLimit.add(second);
+    managerFiveLimit.add(tenth);
+    Film[] actual = managerFiveLimit.findLast();
+    Film[] expected = {tenth, second, fifth, seventh, fourth};
+    assertArrayEquals(expected, actual);
+  }
+  
+  @Test
+  public void findLastFilmsInDefaultLimitLess() {
+    managerDefaultLimit.add(first);
+    managerDefaultLimit.add(second);
+    managerDefaultLimit.add(third);
+    managerDefaultLimit.add(fourth);
+    managerDefaultLimit.add(fifth);
+    managerDefaultLimit.add(sixth);
+    managerDefaultLimit.add(seventh);
+    managerDefaultLimit.add(eighth);
+    
+    Film[] actual = managerDefaultLimit.findLast();
+    Film[] expected = {eighth, seventh, sixth, fifth, fourth, third, second, first};
+    assertArrayEquals(expected, actual);
+  }
+  
+  @Test
+  public void findLastFilmsInDefaultLimit() {
+    managerDefaultLimit.add(first);
+    managerDefaultLimit.add(second);
+    managerDefaultLimit.add(third);
+    managerDefaultLimit.add(fourth);
+    managerDefaultLimit.add(fifth);
+    managerDefaultLimit.add(sixth);
+    managerDefaultLimit.add(seventh);
+    managerDefaultLimit.add(eighth);
+    managerDefaultLimit.add(ninth);
+    managerDefaultLimit.add(tenth);
+    Film[] actual = managerDefaultLimit.findLast();
+    Film[] expected = {tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second, first};
+
+  }
+  
+  @Test
+
   public void addFilm() {
     Film eleventh = new Film(11, "Дюна");
     Film[] returned = {eighth, ninth, tenth, eleventh};
@@ -55,7 +124,14 @@ class FilmManagerTest {
     manager.add(eleventh);
     Film[] actual = manager.findAll();
     Film[] expected = {eighth, ninth, tenth, eleventh};
-    assertArrayEquals(expected, actual);
+
+  public void findFilms() {
+    managerFiveLimit.add(first);
+    managerFiveLimit.add(second);
+    
+    Film[] actual = managerFiveLimit.findAll();
+    Film[] expected = {first, second};
+
     
   }
   
