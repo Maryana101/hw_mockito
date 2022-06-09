@@ -1,6 +1,7 @@
 package ru.netology.domain;
 
 public class FilmManager {
+
   private FilmRepository repo = new FilmRepository();
   private int limit = 10;
   
@@ -22,6 +23,7 @@ public class FilmManager {
   }
   
   public Film[] findLast() {
+
     Film[] films = repo.getFilms();
     int length = films.length;
     int resultLength;
