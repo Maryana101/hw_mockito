@@ -42,8 +42,8 @@ public class FilmManager {
   }
   
   public void removeAll() {
-    repo.removeAll();
-  }
+    repo.setFilms(new Film[0]);
+    }
   
   public Film find(int id) {
     return repo.findById(id);

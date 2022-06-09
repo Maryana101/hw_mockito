@@ -1,62 +1,54 @@
 package ru.netology.domain;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doReturn;
-
+import static org.mockito.Mockito.*;
 class FilmManagerTest {
-  Film first = new Film(1, "Воображариум доктора Парнаса");
-  Film second = new Film(2, "Джей и молчаливый Боб");
-  Film third = new Film(3, "Новые парни турбо");
-  Film fourth = new Film(4, "Мученицы");
-  Film fifth = new Film(5, "Темные воды");
-  Film sixth = new Film(6, "Елена");
-  Film seventh = new Film(7, "Дом, который посторил Джек");
-  Film eighth = new Film(8, "Лабиринт Фавна");
-  Film ninth = new Film(9, "Мальчик в полосатой пижаме");
-  Film tenth = new Film(10, "Догвилль");
+  private Film first;
+  private Film second;
+  private Film third;
+  private FilmRepository mockRepo;
+  private FilmManager manager;
   
+  @BeforeEach
+  public void setUp(){
+    first = new Film(1, "First film");
+    second = new Film(2, "Second film");
+    third = new Film(3, "Third film");
   
-  private FilmRepository mockRepo = Mockito.mock(FilmRepository.class);
-  private FilmManager manager = new FilmManager(mockRepo);
-  
-  @Test
-  public void shouldRemoveFilmById() {
-    Film[] returned = {first, second, seventh, third};
-    doReturn(returned).when(mockRepo).getFilms();
-    
-    manager.removeById(7);
-    
-    Film[] actual = manager.findAll();
-    Film[] expected = {first, second, third};
+    mockRepo = Mockito.mock(FilmRepository.class);
+    manager= new FilmManager(mockRepo);
   }
-  
-  
+ 
   @Test
-  public void findLastFilms() {
-    Film[] returned = {first, second, fourth, seventh};
+  public void shouldFindFilmById(){
+    Film returned=first;
+    doReturn(returned).when(mockRepo).findById(any(Integer.class));
+    
+    Film actual=manager.find(1);
+    Film expected=first;
+    assertEquals(expected,actual);
+  }
+  @Test
+  public void shouldFindLastFilms() {
+    Film[] returned = {first, second, third};
     doReturn(returned).when(mockRepo).getFilms();
     
     Film[] actual = manager.findLast();
-    Film[] expected = {seventh, fourth, second, first};
+    Film[] expected = {third, second, first};
     
     assertArrayEquals(expected, actual);
   }
-  
   @Test
-  public void addFilm() {
-    Film eleventh = new Film(11, "Дюна");
-    Film[] returned = {eighth, ninth, tenth, eleventh};
-    doReturn(returned).when(mockRepo).getFilms();
-    
-    manager.add(eleventh);
-    Film[] actual = manager.findAll();
-    Film[] expected = {eighth, ninth, tenth, eleventh};
-    assertArrayEquals(expected, actual);
-    
+  public void shouldCallMethodSaveForAddFilm() {
+    Film[] films={first, second};
+    mockRepo.setFilms(films);
+    manager.add(third);
+    verify(mockRepo, times(1)).save(third);
   }
+
   
 }

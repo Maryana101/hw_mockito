@@ -39,10 +39,6 @@ public class FilmRepository {
     films=tmp;
   }
   
-  public void removeAll(){
-    films= new Film[0];
-  }
-  
   public Film[] getFilms() {
     return films;
   }
